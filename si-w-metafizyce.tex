@@ -72,7 +72,7 @@
 	    \normalsize Próby przeprowadzenia dowodu na istnienie Boga za pomocą komputera }
 		\HRule{2pt} \\ [0.5cm]
 		%\normalsize \vspace*{5\baselineskip}
-		\includegraphics[width=0.5\linewidth]{goedel.jpg}
+		\includegraphics[width=0.5\linewidth]{anzelm.jpg}
 		}
 
 
@@ -136,19 +136,24 @@ Dowód Anzelma spotkał się z krytyką i to niemal natychmiast po opublikowaniu
 \section{Dowód G\"odla}
 Pełna postać dowodu G\"odla jest skomplikowana i nie będę jej tutaj szczegółowo przytaczał. Przedstawię jedynie podstawowe aksjomaty, definicje i twierdzenia pośrednie -- dla zobrazowania ogólnej komcepcji i zilustrowania faktu, że treści metafizyczne dają się zapisać w języku dzisiejszej logiki. 
 
-Dowód G\"odla wykorzystuje aparat matematyczny logiki modalnej, należącej do tzw. logik nieklasycznych i będącej w zasadzie rozszerzeniem klasycznego rachunku zdań o dwa dodatkowe spójniki, tzw. spójniki modalne: spójnik możliwości $\diamondsuit p$, czytany jako ,,jest możliwe, że $p$'' oraz spójnik konieczności $\Box p$, czytany jako ,,koniecznie $p$''. Za pomocą logiki modalnej można wyrażać stwierdzenia charakteryzujące się różnym stopniem pewności: \emph{Jutro nie musi padać.} \emph{Możliwe, że ustawa zostanie uchwalona.} \emph{Z pewnością poniesie on tego konsekwencje. }
+Dowód G\"odla wykorzystuje aparat matematyczny logiki modalnej, należącej do tzw. logik nieklasycznych i będącej w zasadzie rozszerzeniem klasycznego rachunku zdań o dwa dodatkowe spójniki, tzw. spójniki modalne: spójnik możliwości $\diamondsuit p$, czytany jako ,,jest możliwe, że $p$'' oraz spójnik konieczności $\Box p$, czytany jako ,,koniecznie $p$''. Za pomocą logiki modalnej można wyrażać stwierdzenia charakteryzujące się różnym stopniem pewności: \emph{Jutro nie musi padać.} \emph{Możliwe, że ustawa zostanie uchwalona.} \emph{Z pewnością poniesie on tego konsekwencje. } Oba spójniki modalne można sprowadzać do siebie nawzajem, za pomocą przekształceń analogicznych do zwykłych praw de Morgana:
+\begin{align*}
+\neg \diamondsuit Z & \Leftrightarrow \Box \neg Z \\ 
+\neg \Box Z & \Leftrightarrow \diamondsuit \neg Z
+\end{align*}
 		
-G\"odel wykorzystuje logikę modalną do pokazania, że przy dość ogólnym zbiorze założeń wstępnych prawdziwe jest stwierdzenie, że ,,Bóg istnieje w sposób konieczny''. 
+G\"odelwykorzystuje logikę modalną do pokazania, że przy dość ogólnym zbiorze założeń wstępnych prawdziwe jest stwierdzenie, że ,,Bóg istnieje w sposób konieczny''. 
 
 Opiszę teraz pokrótce samą postać dowodu. Zakładamy najpierw - podobnie jak Anzelm - że obiekty $x$ posiadają różne cechy, tj. predykaty $\varphi(x), \psi(x), \xi(x)$ w sensie logicznym -- i że te cechy dają się opisać jako ,,pozytywne'' $P(\varphi)$ lub ,,negatywne'' $\neg P(\psi)$. Wprowadzamy również symboliczne oznaczenie cechy boskości $G: G(x)$ oznacza zatem, że $x$ jest Bogiem. Na początek przyjmujemy kilka podstawowych aksjomatów dotyczących cech pozytywnych i negatywnych. 
 \begin{axiom-g} \label{axiom:godel1}
 	Brak dobra jest zły i vice versa: 
-	\begin{equation*}
-	\neg P(\varphi) \Leftrightarrow P(\neg \varphi)
-	\end{equation*}
+	\begin{align*}
+	\neg P(\varphi) & \Leftrightarrow P(\neg \varphi) \\ 
+	P(\varphi) & \Leftrightarrow \neg P( \neg \varphi )
+	\end{align*}
 \end{axiom-g}
 \begin{axiom-g} \label{axiom:godel2}
-	Z dobra nie może wynikać zło (dobro implikuje dobro): 
+	Z dobra nie może wynikać zło (dobro zawsze implikuje dobro): 
 	\begin{equation*}
 	\left( P(\varphi) \wedge \Box \forall x: \varphi(x) \Rightarrow \psi(x) \right) \Rightarrow P(\psi)
 	\end{equation*}
@@ -203,22 +208,34 @@ Zgodnie z rozumowaniem Anzelma, wprowadzamy aksjomat, że $E$ jest cechą pozyty
 	P(E)
 \end{axiom-g}
 Ponieważ $E(x)$ jest cechą pozytywną, a $G$ jest jedyną esencją Boga, to -- w połączeniu z twierdzeniem \ref{th:godel1} -- uzyskujemy natychmiastowy wniosek:
-\begin{theorem-g}
+\begin{theorem-g} \label{th:goedel3}
 	$\Box\ \exists x: G(x)$
 \end{theorem-g}
 Udowodniliśmy, że Bóg istnieje w świecie w sposób konieczny. 
 
 \section{Komputerowa analiza dowodu}
+Dowód G\"odla korzysta z nieklasycznej logiki modalnej, i to logiki modalnej wyższego rzędu -- ponieważ wykorzystuje predykaty drugiego rzędu i kwantyfikatory po predykatach (m.in. aksjomat \ref{axiom:godel1}, \ref{axiom:godel3}, \ref{axiom:godel4}). Logiki wyższego rzędu są trudne do komputerowej analizy, ponieważ problemy wyrażone w takich logikach są w ogólności nieobliczalne; dodatkową trudność stanowi reprezentacja spójników modalnych $\diamondsuit$ i $\Box$. Niemniej okazuje się, że logiki modalne wyższego rzędu (HOML, ang. \textit{Higher-Order Modal Logic}) dają się sprowadzić do zwykłej, niemodalnej logiki wyższego rzędu (HOL, ang. \textit{Higher-Order Logic}) poprzez ominięcie spójnika $\Box$ i kilka innych operacji dot. semantyki [Benzm\"uller, 2014]. Tak uproszczona postać dowodu okazuje się być matematycznie równoważna, a co więcej - nadaje się już do zautomatyzowanej analizy. Pierwsze interesujące rezultaty udało się otrzymać w 2014 roku, przy użyciu znanych od dawna programów wspomagających dowodzenie: Isabelle, LEO-II, Satallax i Coq. Udało się potwierdzić następujące fakty:
+\begin{itemize}
+	\item Zbiór aksjomatów \ref{axiom:godel1} -- \ref{axiom:godel4} jest niesprzeczny. 
+	\item Twierdzenie \ref{th:goedel3} jest dowodliwe na bazie przyjętych założeń\footnote{Wymienionym programom nie udało się jednak wytworzyć kompletnego dowodu w formie jawnej, a jedynie stwierdzić, że jest to możliwe. }, tym samym dowód G\"odla jest -- formalnie rzecz biorąc -- poprawny.
+	\item Istnieje tylko jeden Bóg spełniający przyjęte założenia -- na  gruncie przyjętych aksjomatów można więc udowodnić prawdziwość monoteizmu. 
+\end{itemize}
 
+Dowód G\"odla cierpi jednak na swoje własne problemy, częściowo odziedziczone po dowodzie Anzelma. Zarzut podniesiony jeszcze w średniowieczu sprowadza się do tego, że wykorzystując zaproponowaną przez Anzelma konstrukcję myślową można udowodnić istnienie bardzo wielu bytów, np. idealnej wyspy (taka wyspa musiałaby wszak istnieć w rzeczywistości, inaczej nie byłaby idealna), jak również licznych pół-bogów, czy -- odwracając wartościowanie -- demonów i innych, niekoniecznie pożądanych przez nas jako filozofów, bytów. G\"odel znał te zarzuty i projektując swój dowód starał się uniknąć podobnej pułapki -- jednak w oryginalnej wersji dowodu występuje podobne, choć bardziej wyrafinowane zjawisko modalnego kolapsu: wszystko, co jest możliwe, jest również konieczne. Istnienie tego problemu było podnoszone już w latach 80-tych [Sobel, 1987], a całkiem niedawno jego występowanie zostało potwierdzone analizą komputerową [Benzm\"uller, 2014]. 
+
+Podejmowano próby modyfikacji dowodu w celu uniknięcia modalnego kolapsu poprzez osłabienie aksjomatu \ref{axiom:1} [Anderson, 1990]. W jego oryginalnej postaci, ,,pozytywność'' i ,,negatywność'' są swoimi wzajemnymi zaprzeczeniami i niemożliwe są predykaty klasyfikowane jako ,,neutralne''. Zamiana równoważności na implikację:
+\begin{equation*}
+P(\varphi) \Rightarrow \neg P( \neg \varphi )
+\end{equation*}
+dopuszcza istnienie predykatów neutralnych i pozwala na uniknięcie kolapsu [Anderson, 1996]. Tak zmodyfikowany zestaw aksjomatów po jego weryfikacji przez oprogramowanie okazał się jednak niespójny [Benzm\"uller, 2014], [Benzm\"uller, 2016], co było nowym i dosyć zaskakującym rezultatem. Poszukiwania takiej postaci dowodu, która pozwoliłaby uniknąć powyższych problemów, pozostają zatem nadal problemem otwartym. 
 
 \section{Podsumowanie} \label{sec:summary}
-
+Spór o istnienie Boga i możliwość udowodnienia tego faktu toczy się w filozofii od czasów starożytnych. Nowoczesnym dowodem tego rodzaju jest dowód ontologiczny G\"odla, oparty na klasycznym dowodzie ontologicznym Anzelma, i sformalizowany w języku współczesnej logiki. Dzięki wykorzystaniu nowoczesnego oprogramowania, istnieje możliwość analizy tego rodzaju dowodów w sposób zautomatyzowany. Pozwala to rozwiązać niektóre znane problemy, jednocześnie stawia przez nami nowe wyzwania i pytania, na które wciąż nie znamy odpowiedzi. 
 
 
 %-------------------------------------------------------------------------------
 % REFERENCES
 %-------------------------------------------------------------------------------
-\newpage
 \section*{Literaura}
 
 \noindent [Anderson, 1990] Anderson, C. A. (1990). Some emendations of G\"odel’s ontological proof. \textit{Faith and Philosophy}, str. 291–303. Dostęp zdalny (PDF): \url{https://appearedtoblogly.files.wordpress.com/2011/05/anderson-anthony-c-22\\some-emendations-of-gc3b6dels-\\ontological-proof22.pdf} (aby link był poprawny, należy usunąć z niego oba ukośniki ,,\textbackslash''). 
